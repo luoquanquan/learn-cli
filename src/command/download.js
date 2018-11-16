@@ -2,7 +2,7 @@
  * @Author: luoquanquan
  * @Date: 2018-11-15 15:57:42
  * @Last Modified by: luoquanquan
- * @Last Modified time: 2018-11-15 20:08:44
+ * @Last Modified time: 2018-11-16 21:08:11
  */
 
 // 命令管理
@@ -35,9 +35,11 @@ class Download {
   async download() {
     let getProListLoad;
     let getTagListLoad;
-    // let downLoadLoad;
+    let downLoadLoad;
     let repos;
     let version;
+
+    // 获取所在项目组的所有可开发项目列表
     try {
       getProListLoad = this.getProList.start();
       repos = await this.git.getProjectList();
@@ -47,6 +49,8 @@ class Download {
       getProListLoad.fail('获取项目列表失败...');
       process.exit(-1);
     }
+
+    // 向用户咨询他想要开发的项目
     if (repos.length === 0) {
       console.log('\n可以开发的项目数为 0, 肯定是配置错啦~~\n'.red);
       process.exit(-1);
@@ -61,6 +65,7 @@ class Download {
       },
     ];
     const { repo } = await this.inquirer.prompt(questions);
+
     // 获取项目的版本, 这里默认选择确定项目的最近一个版本
     try {
       getTagListLoad = this.getTagList.start();
@@ -72,15 +77,32 @@ class Download {
       process.exit(-1);
     }
 
-    console.log(`您选择的项目是${repo}, 即将下载版本${version}`);
-    // try {
-    //   downLoadLoad = this.downLoad.start();
+    // 向用户咨询欲创建项目的目录
+    const repoName = [
+      {
+        type: 'input',
+        name: 'repoPath',
+        message: '请输入项目名称~',
+        validate(v) {
+          const done = this.async();
+          if (!v.trim()) {
+            done('项目名称不能为空~');
+          }
+          done(null, true);
+        },
+      },
+    ];
+    const { repoPath } = await this.inquirer.prompt(repoName);
 
-    //   downLoadLoad.succeed('下载代码成功');
-    // } catch (error) {
-    //   console.log(error);
-    //   downLoadLoad.fail('下载代码失败...');
-    // }
+    // 下载代码到指定的目录下
+    try {
+      downLoadLoad = this.downLoad.start();
+      await this.git.downloadProject({ repo, version, repoPath });
+      downLoadLoad.succeed('下载代码成功');
+    } catch (error) {
+      console.log(error);
+      downLoadLoad.fail('下载代码失败...');
+    }
   }
 }
 const D = new Download();
