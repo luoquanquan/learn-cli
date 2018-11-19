@@ -6,15 +6,15 @@
  */
 
 // colors console.log 文本添加字体颜色, 美观
-import 'colors';
-
 // 接收命令行参数, 提供基础信息提示功能
-import commander from 'commander';
+const commander = require('commander');
 
 // 内部模块
-import { existsSync } from 'fs';
-import { resolve } from 'path';
-import { version } from '../package.json';
+const { existsSync } = require('fs');
+const { resolve } = require('path');
+const { version } = require('../package.json');
+
+require('colors');
 
 commander.version(version)
   .parse(process.argv);

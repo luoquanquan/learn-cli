@@ -6,12 +6,12 @@
  */
 
 // 命令管理
-import commander from 'commander';
+const commander = require('commander');
 // 命令行交互工具
-import inquirer from 'inquirer';
+const inquirer = require('inquirer');
 // 命令行中显示加载中
-import ora from 'ora';
-import Git from '../tools/git';
+const ora = require('ora');
+const Git = require('../tools/git');
 
 class Download {
   constructor() {

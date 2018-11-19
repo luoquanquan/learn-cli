@@ -6,6 +6,6 @@
  */
 
 //  github api 基础地址
-export const baseURL = 'https://api.github.com';
+exports.baseURL = 'https://api.github.com';
 // github 组织名称
-export const orgName = 'learn-cli-organization';
+exports.orgName = 'learn-cli-organization';

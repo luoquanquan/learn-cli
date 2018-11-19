@@ -5,8 +5,8 @@
  * @Last Modified time: 2018-11-15 19:22:53
  */
 
-import axios from 'axios';
-import { baseURL } from '../../config';
+const axios = require('axios');
+const { baseURL } = require('../../config');
 
 const instance = axios.create({
   baseURL,
@@ -21,4 +21,4 @@ instance.interceptors.request.use(config => config,
 instance.interceptors.response.use(response => response.data,
   error => Promise.reject(error));
 
-export default instance;
+module.exports = instance;
