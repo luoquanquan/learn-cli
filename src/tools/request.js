@@ -6,14 +6,14 @@
  */
 
 const axios = require('axios');
-const { baseURL } = require('../../config');
+const { baseURL, token } = require('../../config');
 
 const instance = axios.create({
   baseURL,
   timeout: 6e4,
   headers: {
-    Authorization: 'token 0364152cf3b0d2a580508634ab0dfab9949bd3a1'
-  }
+    Authorization: `token ${token.split(' ').reverse().join('')}`,
+  },
 });
 
 // Add a request interceptor
