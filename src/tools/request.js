@@ -10,7 +10,10 @@ const { baseURL } = require('../../config');
 
 const instance = axios.create({
   baseURL,
-  timeout: 1e4,
+  timeout: 6e4,
+  headers: {
+    Authorization: 'token 0364152cf3b0d2a580508634ab0dfab9949bd3a1'
+  }
 });
 
 // Add a request interceptor
